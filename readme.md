@@ -29,9 +29,3 @@ parser.processByte(c)
 ```
 which callback function in G13Handler `setData` with apropriate paramteres and update display content, by creating bitmap and passing it through LCD SDK to device display
 * You can also use 4 button below display, just check with `g13.checkButtons()` whitch one ise pressed and send TCP packet with command you wish to use. Again, look it up in `control-reference.html`, for example `s.send(bytes("UFC_COMM1_CHANNEL_SELECT -3200\n","utf-8"))` to rotate COMM1 knob left
-
-
-
-
-
-
