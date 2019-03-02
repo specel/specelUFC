@@ -18,11 +18,15 @@ This software uses:
 
 ## Usage
 * First, you need to "subscribe" data you want and pass it to G13Handler: 
-```ScratchpadNumberDisplay = StringBuffer(parser, 0x543e, 8, lambda s: g13.setData(3,s))```
+```
+ScratchpadNumberDisplay = StringBuffer(parser, 0x543e, 8, lambda s: g13.setData(3,s))
+```
 For required adress and data length look up in `C:\Users\XXX\Saved Games\DCS.openbeta\Scripts\DCS-BIOS\doc\control-reference.html`
 * Then, use parser 
-	c = s.recv(1)
-	parser.processByte(c)
+```
+c = s.recv(1)
+parser.processByte(c)
+```
 which callback function in G13Handler `setData` with apropriate paramteres and update display content, by creating bitmap and passing it through LCD SDK to device display
 * You can also use 4 button below display, just check with `g13.checkButtons()` whitch one ise pressed and send TCP packet with command you wish to use. Again, look it up in `control-reference.html`, for example `s.send(bytes("UFC_COMM1_CHANNEL_SELECT -3200\n","utf-8"))` to rotate COMM1 knob left
 
