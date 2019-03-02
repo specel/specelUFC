@@ -11,9 +11,9 @@ This is a software designed to put all information from DCS:FA18C Hornet's Up Fr
 
 ## Credits
 This software uses:
-* https://github.com/dcs-bios/dcs-bios [DCS-BIOS] for exporting data from DCS to local network
-* https://github.com/jboecker/python-dcs-bios-example [jboecker's] parser to read data stream from DCS-BIOS
-* https://github.com/50thomatoes50/GLCD_SDK.py [A Python wrapper for Logitech's LCD SDK]
+* https://github.com/dcs-bios/dcs-bios DCS-BIOS for exporting data from DCS to local network
+* https://github.com/jboecker/python-dcs-bios-example jboecker's parser to read data stream from DCS-BIOS
+* https://github.com/50thomatoes50/GLCD_SDK.py A Python wrapper for Logitech's LCD SDK
 
 ## Usage
 * First, you need to "subscribe" data you want and pass it to G13Handler: 
