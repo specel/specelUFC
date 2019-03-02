@@ -21,7 +21,7 @@ This software uses:
 ```
 ScratchpadNumberDisplay = StringBuffer(parser, 0x543e, 8, lambda s: g13.setData(3,s))
 ```
-For required adress and data length look up in `C:\Users\XXX\Saved Games\DCS.openbeta\Scripts\DCS-BIOS\doc\control-reference.html`
+For required adress and data length, look up in `C:\Users\XXX\Saved Games\DCS.openbeta\Scripts\DCS-BIOS\doc\control-reference.html`
 * Then, use parser 
 ```
 c = s.recv(1)
