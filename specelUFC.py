@@ -30,8 +30,8 @@ FuelTotal = StringBuffer(parser, 0x5482  , 6, lambda s: g13.setData(40,s))
 
 #s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s = socket.socket()
-s2 = socket.socket()
 s.settimeout(None)
+
 def attemptConnect():
 	connected = False
 
@@ -43,7 +43,6 @@ def attemptConnect():
 		except socket.error as e:
 			print("Connection error: ", e)
 			time.sleep(2)
-			#s.close()
 
 attemptConnect()
 while True:
@@ -66,11 +65,7 @@ while True:
 
 	except socket.error as e:
 		print("Main loop socket error: ", e)
-		#s.close()
-		#time.sleep(2)
-		#attemptConnect()
+
 	except:
 		print("Unexpected error")
-		#s.close()
-		#time.sleep(2)
-		#attemptConnect()
+
