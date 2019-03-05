@@ -6,6 +6,8 @@ This is a software designed to put information from DCS:FA18C Hornet's Up Front 
 </p>
 
 ## Requirements
+* Installed Python 3.x https://www.python.org/downloads/
+
 * Installed Logitech Gaming Software https://support.logitech.com/software/lgs
 
 * Installed Logitech LCD SDK_8.57.148 in `C:\Program Files\Logitech Gaming Software\LCDSDK_8.57.148` http://gaming.logitech.com/sdk/LCDSDK_8.57.148.zip
