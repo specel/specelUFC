@@ -1,7 +1,13 @@
 # specelUFC
 This is a software designed to put information from DCS:FA18C Hornet's Up Front Controller (UFC) to Logitech G-series keyboards. Developed for **Logitech G13**, but should also work with any other Logitech device with 160x43 px monchrome display, like G15 and G510.
 
+<p align="center">
+  <img src="https://i.imgur.com/PK8qdG4.jpg" width="350" title="hover text">
+</p>
+
 ## Requirements
+* Installed Python 3.x https://www.python.org/downloads/
+
 * Installed Logitech Gaming Software https://support.logitech.com/software/lgs
 
 * Installed Logitech LCD SDK_8.57.148 in `C:\Program Files\Logitech Gaming Software\LCDSDK_8.57.148` http://gaming.logitech.com/sdk/LCDSDK_8.57.148.zip
@@ -18,6 +24,7 @@ This software uses:
 * https://github.com/50thomatoes50/GLCD_SDK.py A Python wrapper for Logitech's LCD SDK
 
 ## Usage
+You can use it straight away, by running `specelUFC.py`, it's fully functional and can be run before DCS, as well as after. After succesful connect attemption, G13 display should show data as in picture. If you want to modify or write something by yourself, here's a quick walkthrough:
 * First, you need to "subscribe" data you want and pass it to G13Handler: 
 ```
 ScratchpadNumberDisplay = StringBuffer(parser, 0x543e, 8, lambda s: g13.setData(3,s))
