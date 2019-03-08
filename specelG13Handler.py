@@ -198,3 +198,8 @@ class G13Handler:
 			socket.send(bytes("UFC_COMM2_CHANNEL_SELECT -3200\n","utf-8"))
 		elif button==4:
 			socket.send(bytes("UFC_COMM2_CHANNEL_SELECT +3200\n","utf-8"))
+
+	def initHornet(self, parser):
+		raise NotImplementedError()
+	
+
