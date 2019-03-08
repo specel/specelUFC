@@ -3,6 +3,7 @@
 import GLCD_SDK
 from PIL import Image, ImageFont, ImageDraw
 from ctypes import c_ubyte
+import socket
 
 class G13Handler:
 
@@ -26,6 +27,7 @@ class G13Handler:
 		self.SelectorList=[1,2,3,11,12,13,14,15,21,22,31,32,33,34,35] #outdated
 		self.isAlreadyPressed=False
 
+		#display parameters
 		self.width=160
 		self.height=43
 
@@ -185,3 +187,14 @@ class G13Handler:
 		else:	
 			self.isAlreadyPressed=False
 			return 0
+	
+	def buttonHandle(self, socket):
+		button = self.checkButtons()
+		if button==1:
+			socket.send(bytes("UFC_COMM1_CHANNEL_SELECT -3200\n","utf-8"))
+		elif button==2:
+			socket.send(bytes("UFC_COMM1_CHANNEL_SELECT +3200\n","utf-8"))
+		elif button==3:
+			socket.send(bytes("UFC_COMM2_CHANNEL_SELECT -3200\n","utf-8"))
+		elif button==4:
+			socket.send(bytes("UFC_COMM2_CHANNEL_SELECT +3200\n","utf-8"))

@@ -28,7 +28,6 @@ OptionCueing4 = StringBuffer(parser, 0x5426  , 1, lambda s: g13.setData(34,s))
 OptionCueing5 = StringBuffer(parser, 0x5428  , 1, lambda s: g13.setData(35,s))
 FuelTotal = StringBuffer(parser, 0x5482  , 6, lambda s: g13.setData(40,s))
 
-#s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s = socket.socket()
 s.settimeout(None)
 
@@ -41,7 +40,7 @@ def attemptConnect():
 			print("Connected")
 			connected=True
 		except socket.error as e:
-			print("Connection error: ", e)
+			print("Connection error (is DCS running? are you in cockpit?): ", e)
 			time.sleep(2)
 
 attemptConnect()
@@ -52,6 +51,9 @@ while True:
 		parser.processByte(c)
 
 		#send button commands
+		g13.buttonHandle(s)
+		'''
+		#old stuff
 		button = g13.checkButtons()
 		if button==1:
 			s.send(bytes("UFC_COMM1_CHANNEL_SELECT -3200\n","utf-8"))
@@ -61,6 +63,8 @@ while True:
 			s.send(bytes("UFC_COMM2_CHANNEL_SELECT -3200\n","utf-8"))
 		elif button==4:
 			s.send(bytes("UFC_COMM2_CHANNEL_SELECT +3200\n","utf-8"))
+		'''
+
 
 
 	except socket.error as e:
