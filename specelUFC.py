@@ -65,7 +65,9 @@ while True:
 
 	except socket.error as e:
 		print("Main loop socket error: ", e)
+		time.sleep(2)
 
 	except:
 		print("Unexpected error")
+		time.sleep(2)
 
