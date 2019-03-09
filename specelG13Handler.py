@@ -11,6 +11,9 @@ class G13Handler:
 	def __init__(self, parserHook):
 
 		#init all hornet stuff using new class:
+		######################
+		###########currentAC should be set by specelUFC parser - to do later
+		######################
 		self.currentAC = FA18Handler(self, parserHook)
 
 		self.isAlreadyPressed=False
