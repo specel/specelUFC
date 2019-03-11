@@ -9,11 +9,7 @@ from specelFA18Handler import FA18Handler
 class G13Handler:
 
 	def __init__(self, parserHook):
-
-		#init all hornet stuff using new class:
-		######################
-		###########currentAC should be set by specelUFC parser - to do later
-		######################
+		#init all hornet stuff using new class - will change to autodetect someday:
 		self.currentAC = FA18Handler(self, parserHook)
 
 		self.isAlreadyPressed=False
