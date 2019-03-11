@@ -10,9 +10,6 @@ from specelG13Handler import G13Handler
 parser = ProtocolParser()
 g13 = G13Handler(parser)
 
-# Hornets data subscription
-
-
 s = socket.socket()
 s.settimeout(None)
 
