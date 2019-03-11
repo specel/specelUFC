@@ -24,7 +24,14 @@ This software uses:
 * https://github.com/50thomatoes50/GLCD_SDK.py A Python wrapper for Logitech's LCD SDK
 
 ## Usage
-You can use it straight away, by running `./dist/specelUFC.exe` (or, if you prefer, `specelUFC.py`), it's fully functional and can be run before DCS, as well as after. After succesful connect attemption, G13 display should show data as in picture. If you want to modify or write something by yourself, here's a quick walkthrough:
+You can use it straight away, by running `./dist/specelUFC.exe` (or, if you prefer, `specelUFC.py`), it's fully functional and can be run before DCS, as well as after. After succesful connect attemption, G13 display should show data as in picture. 
+
+* `specelUFC.py` is responsible for initialise parser, G13 handler, as well as running connection with DCS.
+* `specelG13Handler.py` is responsible for initialise aircraft specific file (only F/A18 for now) and handling G13 display and buttons
+* `specelFA18Handler` "subscribes" aircraft data by creating stringbuffers and reading their values, draws bitmap that will be passed to G13 handler and returns input data for buttons under G13 display
+
+If you want to modify or write something by yourself, here's a quick walkthrough:
+
 * First, you need to "subscribe" data you want and pass it to G13Handler: 
 ```
 ScratchpadNumberDisplay = StringBuffer(parser, 0x543e, 8, lambda s: g13.setData(3,s))

@@ -1,6 +1,6 @@
 ## TODO list
 * in order to extend program for using with other a/c:
 ** specelG13Handler need to know, what a/c you're in. It should by checked in main loop. After check, it should create stringbuffers and integerbuffers just one time. When you i.e. hop into FA18C, then AV8b, then FA18C again. 
-** specelUFC should check for buttons in main loop, like it does, and after detection, pass this info to G13Handler, which should return specific string - everything about one plane should by in handler
-** about previous point - again, specelUFC shouldnt make these stringbuffers by itself - it's G13Handlers job. G13Handel should know which plane is selected, and get parser form specelUFC and make required stringbuffers
+** *DONE* specelUFC should check for buttons in main loop, like it does, and after detection, pass this info to G13Handler, which should return specific string - everything about one plane should be in handler
+** *DONE* about previous point - again, specelUFC shouldnt make these stringbuffers by itself - it's G13Handlers job. G13Handel should know which plane is selected, and get parser form specelUFC and make required stringbuffers
 ** last but not least - add new module for handle Mindstorms EV3 devices running ev3dev environtment - it could be fun!
