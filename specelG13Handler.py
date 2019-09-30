@@ -33,6 +33,7 @@ class G13Handler:
 		self.font1 = ImageFont.truetype("consola.ttf",11)
 		self.font2 = ImageFont.truetype("consola.ttf",16)
 
+	#TODO: sprawdzić, czy po zmianie zamolotu sprawdza callbacki w parserze, i cyz dlatego tworzy mi ciagle zjebant wyswietlacz
 	def getAC(self, value):
 		if not value == self.currentAC:
 			self.currentAC=value
