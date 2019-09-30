@@ -23,7 +23,8 @@ def attemptConnect():
 		except socket.error as e:
 			print("Connection error (Is DCS running? Are you in cockpit?): ", e)
 			time.sleep(2)
-
+			
+#FIXME napraw to gówno
 attemptConnect()
 while True:
 	try:
