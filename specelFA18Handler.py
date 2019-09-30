@@ -1,4 +1,5 @@
 #!python3
+#test
 
 from PIL import Image, ImageFont, ImageDraw
 #import specelG13Handler
@@ -44,7 +45,7 @@ class FA18Handler:
         self.bufferOptionCueing5 = StringBuffer(parser, 0x5428  , 1, lambda s: self.setData(35,s))
         self.bufferFuelTotal = StringBuffer(parser, 0x5482  , 6, lambda s: self.setData(40,s))
 
-        self.g13 = displayHandler
+        #self.g13 = displayHandler
         self.width=160
         self.height=43
 
