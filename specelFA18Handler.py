@@ -11,6 +11,8 @@ class FA18Handler:
         self.g13 = displayHandler
         self.parser = parser
 
+        self.MyName = "HORNET"
+
         self.ScratchpadString1Display=""
         self.ScratchpadString2Display=""
         self.ScratchpadNumberDisplay=""

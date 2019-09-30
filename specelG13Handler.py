@@ -5,12 +5,18 @@ from PIL import Image, ImageFont, ImageDraw
 from ctypes import c_ubyte
 import socket
 from specelFA18Handler import FA18Handler
+from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
 
 class G13Handler:
 
 	def __init__(self, parserHook):
-		#init all hornet stuff using new class - will change to autodetect someday:
-		self.currentAC = FA18Handler(self, parserHook)
+		##init all hornet stuff using new class - will change to autodetect someday:
+		#self.currentAChook = FA18Handler(self, parserHook)
+
+		self.bufferAC = StringBuffer(parserHook,0x0000,16, lambda v: self.getAC(v))
+		self.parser = parserHook
+		self.currentAC= "NONE"
+		self.currentACHook = None
 
 		self.isAlreadyPressed=False
 
@@ -21,7 +27,51 @@ class G13Handler:
 		#GLCD Init
 		GLCD_SDK.initDLL("C:\\Program Files\\Logitech Gaming Software\\LCDSDK_8.57.148\\Lib\\GameEnginesWrapper\\x86\\LogitechLcdEnginesWrapper.dll")
 		GLCD_SDK.LogiLcdInit("Python",GLCD_SDK.TYPE_MONO)
-	
+
+		self.img = Image.new('1',(self.width,self.height),0)
+		self.draw = ImageDraw.Draw(self.img)
+		self.font1 = ImageFont.truetype("consola.ttf",11)
+		self.font2 = ImageFont.truetype("consola.ttf",16)
+
+	def getAC(self, value):
+		if not value == self.currentAC:
+			self.currentAC=value
+			if value=="NONE":
+				self.infoDisplay
+				print("no jest inne: ", value)
+
+			elif value=="FA-18C_hornet":
+				self.infoDisplay
+				print("current AC: ", value)
+				self.currentACHook = FA18Handler(self, self.parser)
+
+			else:
+				print("Unknown AC data: ", value)
+				self.infoDisplay()
+
+
+
+	def infoDisplay(self):
+		#clear bitmap
+		#self.draw.rectangle((0,0,self.width, self.height),0,0)
+		self.ClearDisplay()
+
+		self.draw.text((0,0), self.currentAC, 1, self.font1)
+
+		#make it array and set proper values
+		pixels = list(self.img.getdata())
+		for i in range(0,len(pixels)):
+			pixels[i]*=128
+
+		#self.updateDisplay(pixels)
+		if GLCD_SDK.LogiLcdIsConnected(GLCD_SDK.TYPE_MONO):
+			GLCD_SDK.LogiLcdMonoSetBackground((c_ubyte * (self.width *self.height))(*pixels))
+			GLCD_SDK.LogiLcdUpdate()
+		else:
+			print("LCD is not connected")
+
+
+
 	def updateDisplay(self, pixels):
 		#put bitmap array into display
 		if GLCD_SDK.LogiLcdIsConnected(GLCD_SDK.TYPE_MONO):
@@ -73,7 +123,7 @@ class G13Handler:
 	def buttonHandle(self, socket):
 		button = self.checkButtons()
 		if not button==0:
-			socket.send(bytes(self.currentAC.buttonHandleSpecificAC(button),"utf-8"))
+			socket.send(bytes(self.currentACHook.buttonHandleSpecificAC(button),"utf-8"))
 
 	def initHornet(self):
 		raise NotImplementedError("init hornet jeszcze nie działa")

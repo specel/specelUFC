@@ -39,6 +39,6 @@ while True:
 		time.sleep(2)
 
 	except Exception as e:
-		print("Unexpected error. If DCS crashed, restart this software. Error: ", e)
+		print("Unexpected error. If DCS crashed, restart this software, otherwise - ignore. Error: ", e)
 		time.sleep(2)
 
