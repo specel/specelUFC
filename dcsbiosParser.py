@@ -10,7 +10,7 @@ else:
         
 import struct
 
-
+#TODO implementować funkcję czyszczenia callbackó z parsera
 class ProtocolParser:
 	def __init__(self):
 		self.__state = "WAIT_FOR_SYNC"
