@@ -30,7 +30,11 @@ while True:
 	try:
 		#parse bytes
 		c = s.recv(1)
-		parser.processByte(c)
+		if not c=='':
+			parser.processByte(c)
+		else:
+			print("pusty bajt, kontynuuję")
+			g13.infoDisplay(("pusty bajt, kontynuuję"))
 
 		#send button commands
 		g13.buttonHandle(s)
@@ -38,8 +42,9 @@ while True:
 	except socket.error as e:
 		print("Main loop socket error: ", e)
 		time.sleep(2)
-
+'''
 	except Exception as e:
 		print("Unexpected error. If DCS crashed, restart this software, otherwise - ignore. Error: ", e)
+		g13.infoDisplay(("Error occured"))
 		time.sleep(2)
-
+'''

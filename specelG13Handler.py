@@ -15,7 +15,7 @@ class G13Handler:
 
 		self.bufferAC = StringBuffer(parserHook,0x0000,16, lambda v: self.getAC(v))
 		self.parser = parserHook
-		self.currentAC= "NONE"
+		self.currentAC= ""
 		self.currentACHook = None
 
 		self.isAlreadyPressed=False
@@ -33,45 +33,59 @@ class G13Handler:
 		self.font1 = ImageFont.truetype("consola.ttf",11)
 		self.font2 = ImageFont.truetype("consola.ttf",16)
 
-	#TODO: sprawdzić, czy po zmianie zamolotu sprawdza callbacki w parserze, i cyz dlatego tworzy mi ciagle zjebant wyswietlacz
+		self.infoDisplay(("Waiting for AC","2","3","4"))
+		
+
 	def getAC(self, value):
 		if not value == self.currentAC:
 			self.currentAC=value
 			if value=="NONE":
-				self.infoDisplay
-				print("no jest inne: ", value)
+				print("Unknown AC data: ", value,)
+				self.infoDisplay(("Unknown AC data",self.currentAC))
 
 			elif value=="FA-18C_hornet":
-				self.infoDisplay
+				self.infoDisplay()
 				print("current AC: ", value)
 				self.currentACHook = FA18Handler(self, self.parser)
 
+			elif value=="AV8BNA":
+				print("current AC: ", value)
+				self.infoDisplay(("Not implemented AC:",self.currentAC))
+
 			else:
-				print("Unknown AC data: ", value)
-				self.infoDisplay()
+				print("Unknown AC data: ", value, " ", self.currentAC)
+				self.infoDisplay(("Unknown AC data"))
 
 
 
-	def infoDisplay(self):
+
+	def infoDisplay(self, message=""):
 		#clear bitmap
-		#self.draw.rectangle((0,0,self.width, self.height),0,0)
-		self.ClearDisplay()
+		self.draw.rectangle((0,0,self.width, self.height),0,0)
+		#self.ClearDisplay()
 
-		self.draw.text((0,0), self.currentAC, 1, self.font1)
+		if message=="":
+			self.draw.text((0,0), self.currentAC, 1, self.font1)
+		else:
+			y=0
+			#self.draw.text((0,0), message, 1, self.font1)
+			for line in message:
+				self.draw.text((0,y), line, 1, self.font1)
+				y=y+10
 
-		#make it array and set proper values
+
 		pixels = list(self.img.getdata())
 		for i in range(0,len(pixels)):
 			pixels[i]*=128
 
-		#self.updateDisplay(pixels)
+		self.updateDisplay(pixels)
+		'''
 		if GLCD_SDK.LogiLcdIsConnected(GLCD_SDK.TYPE_MONO):
 			GLCD_SDK.LogiLcdMonoSetBackground((c_ubyte * (self.width *self.height))(*pixels))
 			GLCD_SDK.LogiLcdUpdate()
 		else:
 			print("LCD is not connected")
-
-
+		'''
 
 	def updateDisplay(self, pixels):
 		#put bitmap array into display
