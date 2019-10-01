@@ -10,7 +10,7 @@ else:
         
 import struct
 
-#TODO implementować funkcję czyszczenia callbackó z parsera
+#TODO metoda do czyszczenie write_callbacks kurwa, zarowno z parsera jak i string buffera?
 class ProtocolParser:
 	def __init__(self):
 		self.__state = "WAIT_FOR_SYNC"
@@ -52,8 +52,6 @@ class ProtocolParser:
 				self.__state = "ADDRESS_LOW"
 			else:
 				self.__state = "DATA_LOW"
-			
-			
 		if c == 0x55:
 			self.__sync_byte_count += 1
 		else:
