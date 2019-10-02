@@ -39,6 +39,9 @@ while True:
 		except Exception as e:
 			print("Unexpected error: resetting...")
 			break
+	del s
+	del g13
+	del parser
 	print("End of main loop")
 
 
