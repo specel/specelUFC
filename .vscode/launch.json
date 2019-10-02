@@ -9,7 +9,7 @@
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/specelUFC.py",
+            "program": "${workspaceFolder}/specelUFCalternate.py",
             "console": "integratedTerminal"
         }
     ]

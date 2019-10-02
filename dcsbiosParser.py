@@ -1,17 +1,16 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 import sys
-
 if sys.version_info[0] == 2: # python 2.x
-		def byte2int(b):
-				return ord(b)
+        def byte2int(b):
+                return ord(b)
 else:
-		def byte2int(b):
-				return ord(b)#b[0]
-				
+        def byte2int(b):
+                return b[0]
+        
 import struct
 
-#TODO metoda do czyszczenie write_callbacks kurwa, zarowno z parsera jak i string buffera?
+
 class ProtocolParser:
 	def __init__(self):
 		self.__state = "WAIT_FOR_SYNC"
@@ -23,9 +22,6 @@ class ProtocolParser:
 		self.frame_sync_callbacks = set()
 		
 	def processByte(self, c):
-		if c=='':
-			print("pusty bajt?")
-			return
 		c = byte2int(c)
 		if self.__state == "ADDRESS_LOW":
 			self.__address = c
@@ -56,6 +52,8 @@ class ProtocolParser:
 				self.__state = "ADDRESS_LOW"
 			else:
 				self.__state = "DATA_LOW"
+			
+			
 		if c == 0x55:
 			self.__sync_byte_count += 1
 		else:

@@ -13,10 +13,11 @@ class G13Handler:
 		##init all hornet stuff using new class - will change to autodetect someday:
 		#self.currentAChook = FA18Handler(self, parserHook)
 
-		self.bufferAC = StringBuffer(parserHook,0x0000,16, lambda v: self.getAC(v))
+		self.bufferAC = StringBuffer(parserHook,0x0000,16, lambda v: self.setAC(v))
 		self.parser = parserHook
-		self.currentAC= ""
+		self.currentAC= None
 		self.currentACHook = None
+		self.shouldActivateNewAC= False
 
 		self.isAlreadyPressed=False
 
@@ -33,31 +34,36 @@ class G13Handler:
 		self.font1 = ImageFont.truetype("consola.ttf",11)
 		self.font2 = ImageFont.truetype("consola.ttf",16)
 
-		self.infoDisplay(("Waiting for AC","2","3","4"))
+		self.infoDisplay(("G13 initialised OK","Waiting for DCS","","specel UFC v1.1"))
 		
-
-	def getAC(self, value):
+#### for new A/C implementation, make sure that setAC() makes shouldActivateNewAC=true, and then activateNewAC creates needed handler###
+	def setAC(self, value):
 		if not value == self.currentAC:
 			self.currentAC=value
 			if value=="NONE":
 				print("Unknown AC data: ", value,)
-				self.infoDisplay(("Unknown AC data",self.currentAC))
+				self.infoDisplay(("Unknown AC data:",self.currentAC))
 
 			elif value=="FA-18C_hornet":
 				self.infoDisplay()
-				print("current AC: ", value)
-				self.currentACHook = FA18Handler(self, self.parser)
+				print("Detected AC: ", value)
+				self.shouldActivateNewAC=True
 
 			elif value=="AV8BNA":
-				print("current AC: ", value)
-				self.infoDisplay(("Not implemented AC:",self.currentAC))
+				print("Detected AC: ", value)
+				self.shouldActivateNewAC=True
 
 			else:
-				print("Unknown AC data: ", value, " ", self.currentAC)
-				self.infoDisplay(("Unknown AC data"))
+				print("Unknown AC data: ", value)
+				self.infoDisplay(("Unknown AC data",))
 
-
-
+	def activateNewAC(self):
+		self.shouldActivateNewAC=False
+		if self.currentAC=="FA-18C_hornet":
+			self.currentACHook = FA18Handler(self, self.parser)
+		elif self.currentAC=="AV8BNA":
+			self.infoDisplay(("AV8BNA", "not implemented yet"))
+			
 
 	def infoDisplay(self, message=""):
 		#clear bitmap
@@ -140,7 +146,5 @@ class G13Handler:
 		if not button==0:
 			socket.send(bytes(self.currentACHook.buttonHandleSpecificAC(button),"utf-8"))
 
-	def initHornet(self):
-		raise NotImplementedError("init hornet jeszcze nie działa")
 	
 

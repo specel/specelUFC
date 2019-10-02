@@ -30,18 +30,25 @@ while True:
 		try:
 			c=s.recv(1)
 			parser.processByte(c)
+			if g13.shouldActivateNewAC==True:
+				g13.activateNewAC()
 
 			g13.buttonHandle(s)
 
 		except socket.error as e:
 			print("Main loop socket error: ", e)
 			time.sleep(2)
+		
 		except Exception as e:
-			print("Unexpected error: resetting...")
+			print("Unexpected error: resetting... : ", e)
+			time.sleep(2)
 			break
+		
+
+	
 	del s
 	del g13
 	del parser
-	print("End of main loop")
+	
 
 
