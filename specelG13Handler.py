@@ -55,7 +55,7 @@ class G13Handler:
 
 			else:
 				print("Unknown AC data: ", value)
-				self.infoDisplay(("Unknown AC data",))
+				self.infoDisplay(("Unknown AC data:",self.currentAC))
 
 	def activateNewAC(self):
 		self.shouldActivateNewAC=False

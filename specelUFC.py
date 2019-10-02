@@ -7,12 +7,6 @@ import socket, time
 from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
 from specelG13Handler import G13Handler
 
-parser = ProtocolParser()
-g13 = G13Handler(parser)
-
-s = socket.socket()
-s.settimeout(None)
-
 def attemptConnect():
 	connected = False
 	while not connected:
@@ -23,28 +17,39 @@ def attemptConnect():
 		except socket.error as e:
 			print("Connection error (Is DCS running? Are you in cockpit?): ", e)
 			time.sleep(2)
-			
-#FIXME napraw to gówno
-attemptConnect()
+
 while True:
-	try:
-		#parse bytes
-		c = s.recv(1)
-		if not c=='':
+	print("specelUFC v1.1, https://github.com/specel/specelUFC")
+	parser = ProtocolParser()
+	g13 = G13Handler(parser)
+
+	s = socket.socket()
+	s.settimeout(None)
+
+	attemptConnect()
+	while True:
+		try:
+			c=s.recv(1)
 			parser.processByte(c)
-		else:
-			print("pusty bajt, kontynuuję")
-			g13.infoDisplay(("pusty bajt, kontynuuję"))
+			if g13.shouldActivateNewAC==True:
+				g13.activateNewAC()
 
-		#send button commands
-		g13.buttonHandle(s)
+			g13.buttonHandle(s)
 
-	except socket.error as e:
-		print("Main loop socket error: ", e)
-		time.sleep(2)
-'''
-	except Exception as e:
-		print("Unexpected error. If DCS crashed, restart this software, otherwise - ignore. Error: ", e)
-		g13.infoDisplay(("Error occured"))
-		time.sleep(2)
-'''
+		except socket.error as e:
+			print("Main loop socket error: ", e)
+			time.sleep(2)
+		
+		except Exception as e:
+			print("Unexpected error: resetting... : ", e)
+			time.sleep(2)
+			break
+		
+
+	
+	del s
+	del g13
+	del parser
+	
+
+
