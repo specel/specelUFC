@@ -46,6 +46,7 @@ checkCurrentVersion()
 while True:
 	parser = ProtocolParser()
 	g13 = G13Handler(parser)
+	g13.infoDisplay(("G13 initialised OK","Waiting for DCS","","specel UFC "+__version__))
 
 	s = socket.socket()
 	s.settimeout(None)

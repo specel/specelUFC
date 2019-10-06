@@ -33,8 +33,6 @@ class G13Handler:
 		self.draw = ImageDraw.Draw(self.img)
 		self.font1 = ImageFont.truetype("consola.ttf",11)
 		self.font2 = ImageFont.truetype("consola.ttf",16)
-
-		self.infoDisplay(("G13 initialised OK","Waiting for DCS","","specel UFC v1.1"))
 		
 #### for new A/C implementation, make sure that setAC() makes shouldActivateNewAC=true, and then activateNewAC creates needed handler###
 	def setAC(self, value):
