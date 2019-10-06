@@ -3,23 +3,47 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import socket, time
+import socket, time, requests, json
+from packaging import version
 from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
 from specelG13Handler import G13Handler
 
+__version__="v1.11"
+
 def attemptConnect():
 	connected = False
+	print("Waiting for DCS connection...")
 	while not connected:
 		try:
 			s.connect(("127.0.0.1", 7778))
 			print("Connected")
 			connected=True
-		except socket.error as e:
-			print("Connection error (Is DCS running? Are you in cockpit?): ", e)
+		except socket.error:
 			time.sleep(2)
 
+def checkCurrentVersion():
+	try:
+		url="https://api.github.com/repos/specel/specelUFC/releases/latest"
+		response = requests.get(url)
+		if response.status_code==200:
+			jsonResponse=response.json()
+			onlineVersion=jsonResponse["tag_name"]
+			if version.parse(onlineVersion)>version.parse(__version__):
+				print("There is updated version of specelUFC: ",onlineVersion, "- get it on https://github.com/specel/specelUFC")
+			elif version.parse(onlineVersion)==version.parse(__version__):
+				print("This is up-to-date version")
+			else:
+				print("coś się zjebało: __version__:", __version__,", a onlineVersion:",onlineVersion)
+		else:
+			print("Unable to check version online. Try again later. Status=", response.status_code())
+	except Exception as e:
+		print("Unable to check version online: ", e)
+
+
+
+print("specelUFC ",__version__," https://github.com/specel/specelUFC")
+checkCurrentVersion()
 while True:
-	print("specelUFC v1.1, https://github.com/specel/specelUFC")
 	parser = ProtocolParser()
 	g13 = G13Handler(parser)
 
@@ -50,6 +74,7 @@ while True:
 	del s
 	del g13
 	del parser
+
 	
 
 
