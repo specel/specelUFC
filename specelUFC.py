@@ -12,16 +12,18 @@ __version__="v1.1"
 def attemptConnect():
 	connected = False
 	while not connected:
+		print("Waiting for connection...")
 		try:
 			s.connect(("127.0.0.1", 7778))
 			print("Connected")
 			connected=True
 		except socket.error as e:
-			print("Connection error (Is DCS running? Are you in cockpit?): ", e)
 			time.sleep(2)
 
 while True:
 	print("specelUFC ",__version__," https://github.com/specel/specelUFC")
+
+	
 	parser = ProtocolParser()
 	g13 = G13Handler(parser)
 
