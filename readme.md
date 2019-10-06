@@ -24,10 +24,13 @@ This software uses:
 * https://github.com/50thomatoes50/GLCD_SDK.py A Python wrapper for Logitech's LCD SDK
 
 ## Changelog
+### v1.11
+*Added - Update checker will check is there a newer version od this software
 ### v1.1
 * Added - Aircraft detection. Software now detects active aircraft and will load specific handlers, not only FA-18C
 * Fixed - After disconnect from server or leaving current mission, software will reset itself and wait for new connection
-### v1.0 - initial release
+### v1.0 
+* initial release
 
 ## Usage
 You can use it straight away, by running `./dist/specelUFC.exe` (or, if you prefer, `specelUFC.py`), it's fully functional and can be run before DCS, as well as after. After succesful connect attemption, G13 display should show data as in picture. 
