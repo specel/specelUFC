@@ -7,6 +7,8 @@ import socket, time
 from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
 from specelG13Handler import G13Handler
 
+__version__="v1.1"
+
 def attemptConnect():
 	connected = False
 	while not connected:
@@ -19,7 +21,7 @@ def attemptConnect():
 			time.sleep(2)
 
 while True:
-	print("specelUFC v1.1, https://github.com/specel/specelUFC")
+	print("specelUFC ",__version__," https://github.com/specel/specelUFC")
 	parser = ProtocolParser()
 	g13 = G13Handler(parser)
 
