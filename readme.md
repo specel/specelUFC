@@ -25,7 +25,7 @@ This software uses:
 
 ## Changelog
 ### v1.11
-*Added - Update checker will check is there a newer version od this software
+* Added - Update checker will check is there a newer version od this software
 ### v1.1
 * Added - Aircraft detection. Software now detects active aircraft and will load specific handlers, not only FA-18C
 * Fixed - After disconnect from server or leaving current mission, software will reset itself and wait for new connection
