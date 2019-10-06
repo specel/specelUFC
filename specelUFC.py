@@ -3,7 +3,8 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import socket, time
+import socket, time, requests, json
+from packaging import version
 from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
 from specelG13Handler import G13Handler
 
@@ -11,19 +12,36 @@ __version__="v1.1"
 
 def attemptConnect():
 	connected = False
+	print("Waiting for connection...")
 	while not connected:
-		print("Waiting for connection...")
 		try:
 			s.connect(("127.0.0.1", 7778))
 			print("Connected")
 			connected=True
-		except socket.error as e:
+		except socket.error:
 			time.sleep(2)
+#FIXME o co tu chodzi?
+def checkCurrentVersion():
+	url="https://api.github.com/repos/specel/specelUFC/releases/latest"
+	response = requests.get(url)
+	if response.status_code==200:
+		jsonResponse=response.json()
+		for data in jsonResponse:
+			onlineVersion=data[13]
+		
+		if version.parse(onlineVersion)>version.parse(__version__):
+			print("There is updated version of specelUFC: ",onlineVersion, "- get it on https://github.com/specel/specelUFC")
+		elif version.parse(onlineVersion)==version.parse(__version__):
+			print("This is up-to-date version")
+		else:
+			print("coś się zjebało: __version__:", __version__,", a onlineVersion:",onlineVersion)
+	else:
+		print("Can't check version online. Try again later")
 
+
+print("specelUFC ",__version__," https://github.com/specel/specelUFC")
+checkCurrentVersion()
 while True:
-	print("specelUFC ",__version__," https://github.com/specel/specelUFC")
-
-	
 	parser = ProtocolParser()
 	g13 = G13Handler(parser)
 
@@ -54,6 +72,7 @@ while True:
 	del s
 	del g13
 	del parser
+
 	
 
 
