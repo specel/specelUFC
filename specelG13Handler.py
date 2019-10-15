@@ -5,6 +5,7 @@ from PIL import Image, ImageFont, ImageDraw
 from ctypes import c_ubyte
 import socket
 from specelFA18Handler import FA18Handler
+from specelF16Handler import F16Handler
 from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
 
 class G13Handler:
@@ -47,11 +48,16 @@ class G13Handler:
 				print("Detected AC: ", value)
 				self.shouldActivateNewAC=True
 
-			elif value=="AV8BNA":
+			elif value=="AV8BNA": 
+				print("Detected AC: ", value)
+				self.shouldActivateNewAC=True
+
+			elif value=="F-16C_50": 
 				print("Detected AC: ", value)
 				self.shouldActivateNewAC=True
 
 			else:
+				## FIXME a może tylko tyo zostawić, żeby po prostu zaczynał aktywaować nowy moduł, a weryfikację zostawić w metodzie poniżej?
 				print("Unknown AC data: ", value)
 				self.infoDisplay(("Unknown AC data:",self.currentAC))
 
@@ -61,6 +67,9 @@ class G13Handler:
 			self.currentACHook = FA18Handler(self, self.parser)
 		elif self.currentAC=="AV8BNA":
 			self.infoDisplay(("AV8BNA", "not implemented yet"))
+		elif self.currentAC=="F-16C_50":
+			self.currentACHook = F16Handler(self, self.parser)
+
 			
 
 	def infoDisplay(self, message=""):

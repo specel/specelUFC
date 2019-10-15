@@ -1,4 +1,5 @@
 ## TODO list
 * f-16 ded import
-* new version update checker 
-* last but not least - add new module for handle Mindstorms EV3 devices running ev3dev environtment - it could be fun!
+** list of required files to copy
+
+
