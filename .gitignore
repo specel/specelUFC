@@ -15,7 +15,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/specelUFC/
+dist/
 downloads/
 eggs/
 .eggs/

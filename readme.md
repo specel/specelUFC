@@ -1,5 +1,5 @@
 # specelUFC
-This is a software designed to put information from DCS:FA18C Hornet's Up Front Controller (UFC) to Logitech G-series keyboards. Developed for **Logitech G13**, but should also work with any other Logitech device with 160x43 px monchrome display, like G15 and G510.
+This is a software designed to put information from DCS:FA18C Hornet's Up Front Controller (UFC) and F-16C DED display to Logitech G-series keyboards. Developed for **Logitech G13**, but should also work with any other Logitech device with 160x43 px monchrome display, like G15 and G510.
 
 <p align="center">
   <img src="https://i.imgur.com/PK8qdG4.jpg" width="350" title="hover text">
@@ -12,18 +12,22 @@ This is a software designed to put information from DCS:FA18C Hornet's Up Front 
 
 * Installed Logitech LCD SDK_8.57.148 in `C:\Program Files\Logitech Gaming Software\LCDSDK_8.57.148` http://gaming.logitech.com/sdk/LCDSDK_8.57.148.zip
 
-* DCS-BIOS https://github.com/dcs-bios/dcs-bios copied into `C:\Users\XXX\Saved Games\DCS.openbeta\Scripts`. You also need to add ```dofile(lfs.writedir()..[[Scripts\DCS-BIOS\BIOS.lua]])``` line to your `C:\Users\XXX\Saved Games\DCS.openbeta\Scripts\Export.lua` file
+* DCS-BIOS https://github.com/DCSFlightpanels/dcs-bios (version required 0.7.30f)copied into `C:\Users\XXX\Saved Games\DCS.openbeta\Scripts`. You also need to add ```dofile(lfs.writedir()..[[Scripts\DCS-BIOS\BIOS.lua]])``` line to your `C:\Users\XXX\Saved Games\DCS.openbeta\Scripts\Export.lua` file
 
-* Installed DCS-BIOS F/A-18C library https://forums.eagle.ru/showthread.php?t=210960 by AndrewW for DCS-BIOS (just copy into DCS-BIOS Scripts folder)
+* Copied DCS-BIOS F16C custom script `F-16C_50.lua`(included in **dependencies** folder) into `Scripts\DCS-BIOS\lib` (replace old file)
 
 ## Credits
 This software uses:
-* https://github.com/dcs-bios/dcs-bios DCS-BIOS for exporting data from DCS to local network
-* https://forums.eagle.ru/showthread.php?t=210960 DCS-BIOS F/A-18C library extension by AndrewW
+* https://github.com/DCSFlightpanels/dcs-bios DCS-BIOS fork by DCSFlightpanels for exporting data from DCS to local network (version required 0.7.30f) (included in **dependencies** folder)
+* Matchstick's script for exportind DED over DCS-BIOS (included in **dependencies** folder)
 * https://github.com/jboecker/python-dcs-bios-example jboecker's parser to read data stream from DCS-BIOS
 * https://github.com/50thomatoes50/GLCD_SDK.py A Python wrapper for Logitech's LCD SDK
 
 ## Changelog
+### v1.12
+* Added - specelUFC will now export F-16C Data Entry Display (DED) on screen - for now it is required to copy custom .lua script into `Scripts\DCS-BIOS\lib`
+* Changed - specelUFC will by now based on **DCSFlightpanels/dcs-bios**
+
 ### v1.11
 * Added - Update checker will check is there a newer version od this software
 ### v1.1
