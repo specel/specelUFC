@@ -1,5 +1,6 @@
 ## TODO list
 * f-16 ded import
 ** list of required files to copy
+* log file generation in case of exception
 
 
