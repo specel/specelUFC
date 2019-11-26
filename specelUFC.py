@@ -33,7 +33,7 @@ def checkCurrentVersion():
 			elif version.parse(onlineVersion)==version.parse(__version__):
 				print("This is up-to-date version")
 			else:
-				print("coś się zjebało: __version__:", __version__,", a onlineVersion:",onlineVersion)
+				print("Something goes wrong: local version:", __version__,", a onlineVersion:",onlineVersion)
 		else:
 			print("Unable to check version online. Try again later. Status=", response.status_code())
 	except Exception as e:
