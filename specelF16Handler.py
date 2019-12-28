@@ -22,8 +22,7 @@ class F16Handler(AircraftHandler):
         self.bufferDEDLine5= StringBuffer(parser, 0x45c4, 50, lambda s: self.setData("DEDLine5", s))
 
     def updateDisplay(self):
-        #clear bitmap
-        self.draw.rectangle((0,0,self.width, self.height),0,0)
+        super(F16Handler, self).updateDisplay()
 
         '''print(self.DEDLine1)
         print(self.DEDLine2)

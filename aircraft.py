@@ -24,9 +24,9 @@ class AircraftHandler(object):
         elif buttonPressed == 4:
             return "UFC_COMM2_CHANNEL_SELECT +3200\n"
 
-    @abstractmethod
     def updateDisplay(self):
-        pass
+        # clear bitmap
+        self.draw.rectangle((0, 0, self.width, self.height), 0, 0)
 
     @abstractmethod
     def setData(self, selector, value, update=True):

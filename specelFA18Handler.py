@@ -44,8 +44,7 @@ class FA18Handler(AircraftHandler):
         self.bufferFuelTotal = StringBuffer(parser, 0x748a    , 6, lambda s: self.setData(40,s))
 
     def updateDisplay(self):
-        #clear bitmap
-        self.draw.rectangle((0,0,self.width, self.height),0,0)
+        super(FA18Handler, self).updateDisplay()
 
         #Scrachpad
         self.draw.text((0,0), (self.ScratchpadString1Display+""+ self.ScratchpadString2Display+""+self.ScratchpadNumberDisplay), 1, self.font2)
