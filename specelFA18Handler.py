@@ -1,18 +1,14 @@
 #!python3
 #test
 
-from PIL import Image, ImageFont, ImageDraw
 #import specelG13Handler
+from aircraft import AircraftHandler
 from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
 
-class FA18Handler:
+class FA18Handler(AircraftHandler):
 
     def __init__(self, displayHandler, parser):
-        self.g13 = displayHandler
-        self.parser = parser
-
-        self.MyName = "HORNET"
-
+        super(FA18Handler, self).__init__(displayHandler, parser)
         self.ScratchpadString1Display=""
         self.ScratchpadString2Display=""
         self.ScratchpadNumberDisplay=""
@@ -46,15 +42,6 @@ class FA18Handler:
         self.bufferOptionCueing4 = StringBuffer(parser, 0x742e   , 1, lambda s: self.setData(34,s))
         self.bufferOptionCueing5 = StringBuffer(parser, 0x7430   , 1, lambda s: self.setData(35,s))
         self.bufferFuelTotal = StringBuffer(parser, 0x748a    , 6, lambda s: self.setData(40,s))
-
-        #self.g13 = displayHandler
-        self.width=160
-        self.height=43
-
-        self.img = Image.new('1',(self.width,self.height),0)
-        self.draw = ImageDraw.Draw(self.img)
-        self.font1 = ImageFont.truetype("consola.ttf",11)
-        self.font2 = ImageFont.truetype("consola.ttf",16)
 
     def updateDisplay(self):
         #clear bitmap
@@ -147,13 +134,3 @@ class FA18Handler:
         	print("No such selector: ", selector)
         if update:
         	self.updateDisplay()
-    
-    def buttonHandleSpecificAC(self, buttonPressed):
-        if buttonPressed==1:
-        	return "UFC_COMM1_CHANNEL_SELECT -3200\n"
-        elif buttonPressed==2:
-        	return "UFC_COMM1_CHANNEL_SELECT +3200\n"
-        elif buttonPressed==3:
-        	return "UFC_COMM2_CHANNEL_SELECT -3200\n"
-        elif buttonPressed==4:
-        	return "UFC_COMM2_CHANNEL_SELECT +3200\n"
