@@ -29,5 +29,5 @@ class AircraftHandler(object):
         pass
 
     @abstractmethod
-    def setData(self):
+    def setData(self, selector, value, update=True):
         pass
