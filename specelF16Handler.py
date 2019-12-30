@@ -50,21 +50,3 @@ class F16Handler(AircraftHandler):
         	pixels[i]*=128
 
         self.g13.updateDisplay(pixels)
-        
-    def setData(self, selector, value, update=True):
-		#programming noob here, but it's pretty clear how to use this monster
-        if	selector=="DEDLine1":
-            self.DEDLine1 = value
-        elif selector=="DEDLine2":
-            self.DEDLine2 = value
-        elif selector=="DEDLine3":
-            self.DEDLine3 = value
-        elif selector=="DEDLine4":
-            self.DEDLine4 = value
-        elif selector=="DEDLine5":
-            self.DEDLine5 = value
-        else:
-        	print("No such selector: ", selector)
-
-        if update:
-        	self.updateDisplay()
