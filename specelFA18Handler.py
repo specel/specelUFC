@@ -47,7 +47,7 @@ class FA18Handler(AircraftHandler):
         super(FA18Handler, self).updateDisplay()
 
         #Scrachpad
-        self.g13.draw.text((0,0), (self.ScratchpadString1Display+""+ self.ScratchpadString2Display+""+self.ScratchpadNumberDisplay), 1, self.g13.font2)
+        self.g13.draw.text((0,0), self.ScratchpadString1Display+self.ScratchpadString2Display+self.ScratchpadNumberDisplay, 1, self.g13.font2)
         self.g13.draw.line((0,20,115,20),1, 1)
 
         #comm1
