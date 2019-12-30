@@ -60,17 +60,11 @@ class FA18Handler(AircraftHandler):
         self.g13.draw.text((140-offsetComm2,29), self.COMM2Display, 1, self.g13.font2)
 
         #option display 1..5 with cueing
-        pos=0
-        offset=8
-        self.g13.draw.text((120,pos), "1"+self.OptionCueing1+self.OptionDisplay1, 1, self.g13.font1)
-        pos+=offset
-        self.g13.draw.text((120,pos), "2"+self.OptionCueing2+self.OptionDisplay2, 1, self.g13.font1)
-        pos+=offset
-        self.g13.draw.text((120,pos), "3"+self.OptionCueing3+self.OptionDisplay3, 1, self.g13.font1)
-        pos+=offset
-        self.g13.draw.text((120,pos), "4"+self.OptionCueing4+self.OptionDisplay4, 1, self.g13.font1)
-        pos+=offset
-        self.g13.draw.text((120,pos), "5"+self.OptionCueing5+self.OptionDisplay5, 1, self.g13.font1)
+        for i in range(1, 6):
+            offset = (i - 1) * 8
+            self.g13.draw.text((120, offset),
+                               f'{i}{getattr(self, f"OptionCueing{i}")}{getattr(self, f"OptionDisplay{i}")}',
+                               1, self.g13.font1)
 
         #Fuel Totaliser
         self.g13.draw.text((36,29), self.FuelTotal, 1, self.g13.font2)
