@@ -42,27 +42,14 @@ class G13Handler:
 	def setAC(self, value):
 		if not value == self.currentAC:
 			self.currentAC=value
-			if value=="NONE":
-				print("Unknown AC data: ", value,)
-				self.infoDisplay(("Unknown AC data:",self.currentAC))
-
-			elif value=="FA-18C_hornet":
+			if value in ("FA-18C_hornet", "AV8BNA", "F-16C_50"):
+				print(f'Detected AC: {value}')
 				self.infoDisplay()
-				print("Detected AC: ", value)
-				self.shouldActivateNewAC=True
-
-			elif value=="AV8BNA": 
-				print("Detected AC: ", value)
-				self.shouldActivateNewAC=True
-
-			elif value=="F-16C_50": 
-				print("Detected AC: ", value)
-				self.shouldActivateNewAC=True
-
+				self.shouldActivateNewAC = True
 			else:
 				## FIXME a może tylko tyo zostawić, żeby po prostu zaczynał aktywaować nowy moduł, a weryfikację zostawić w metodzie poniżej?
-				print("Unknown AC data: ", value)
-				self.infoDisplay(("Unknown AC data:",self.currentAC))
+				print(f'Unknown AC data: {value}')
+				self.infoDisplay(('Unknown AC data:', self.currentAC))
 
 	def activateNewAC(self):
 		self.shouldActivateNewAC=False
