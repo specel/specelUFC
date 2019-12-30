@@ -5,10 +5,10 @@ from sys import maxsize
 
 import GLCD_SDK
 from PIL import Image, ImageFont, ImageDraw
-from ctypes import c_ubyte, sizeof, c_voidp
+from ctypes import c_ubyte, sizeof, c_void_p
 from specelFA18Handler import FA18Handler
 from specelF16Handler import F16Handler
-from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
+from dcsbiosParser import StringBuffer
 
 
 class G13Handler:
@@ -30,7 +30,7 @@ class G13Handler:
 		self.height=43
 
 		#GLCD Init
-		arch = 'x64' if all([architecture()[0] == '64bit', maxsize > 2 ** 32, sizeof(c_voidp) > 4]) else 'x86'
+		arch = 'x64' if all([architecture()[0] == '64bit', maxsize > 2 ** 32, sizeof(c_void_p) > 4]) else 'x86'
 		GLCD_SDK.initDLL("C:\\Program Files\\Logitech Gaming Software\\LCDSDK_8.57.148\\Lib\\GameEnginesWrapper\\{}\\LogitechLcdEnginesWrapper.dll".format(arch))
 		GLCD_SDK.LogiLcdInit("Python",GLCD_SDK.TYPE_MONO)
 
