@@ -1,14 +1,15 @@
 #!python3
+from math import log2
 from platform import architecture
 from sys import maxsize
 
 import GLCD_SDK
 from PIL import Image, ImageFont, ImageDraw
 from ctypes import c_ubyte, sizeof, c_voidp
-import socket
 from specelFA18Handler import FA18Handler
 from specelF16Handler import F16Handler
 from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
+
 
 class G13Handler:
 
@@ -106,40 +107,18 @@ class G13Handler:
 		GLCD_SDK.LogiLcdUpdate()
 
 	def checkButtons(self):
-		if GLCD_SDK.LogiLcdIsButtonPressed(GLCD_SDK.MONO_BUTTON_0):
-			if not self.isAlreadyPressed:
-				self.isAlreadyPressed=True
-				return 1
-			else:
+		for btn in (GLCD_SDK.MONO_BUTTON_0, GLCD_SDK.MONO_BUTTON_1, GLCD_SDK.MONO_BUTTON_2, GLCD_SDK.MONO_BUTTON_3):
+			if GLCD_SDK.LogiLcdIsButtonPressed(btn):
+				if not self.isAlreadyPressed:
+					self.isAlreadyPressed = True
+					return int(log2(btn)) + 1
 				return 0
-
-		elif GLCD_SDK.LogiLcdIsButtonPressed(GLCD_SDK.MONO_BUTTON_1):
-			if not self.isAlreadyPressed:
-				self.isAlreadyPressed=True
-				return 2
-			else:
-				return 0
-
-		elif GLCD_SDK.LogiLcdIsButtonPressed(GLCD_SDK.MONO_BUTTON_2):
-			if not self.isAlreadyPressed:
-				self.isAlreadyPressed=True
-				return 3
-			else:
-				return 0
-
-		elif GLCD_SDK.LogiLcdIsButtonPressed(GLCD_SDK.MONO_BUTTON_3):
-			if not self.isAlreadyPressed:
-				self.isAlreadyPressed=True
-				return 4
-			else:
-				return 0
-		else:	
-			self.isAlreadyPressed=False
-			return 0
+		self.isAlreadyPressed = False
+		return 0
 	
 	def buttonHandle(self, socket):
 		button = self.checkButtons()
-		if not button==0:
+		if button:
 			socket.send(bytes(self.currentACHook.buttonHandleSpecificAC(button),"utf-8"))
 
 	
