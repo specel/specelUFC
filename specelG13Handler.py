@@ -76,12 +76,7 @@ class G13Handler:
 				self.draw.text((0,y), line, 1, self.font1)
 				y=y+10
 
-
-		pixels = list(self.img.getdata())
-		for i in range(0,len(pixels)):
-			pixels[i]*=128
-
-		self.updateDisplay(pixels)
+		self.updateDisplay(self.img)
 		'''
 		if GLCD_SDK.LogiLcdIsConnected(GLCD_SDK.TYPE_MONO):
 			GLCD_SDK.LogiLcdMonoSetBackground((c_ubyte * (self.width *self.height))(*pixels))
