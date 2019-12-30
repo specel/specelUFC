@@ -1,16 +1,6 @@
-from PIL import Image, ImageFont, ImageDraw
-
-
 class AircraftHandler:
-    def __init__(self, displayHandler, parser):
+    def __init__(self, displayHandler):
         self.g13 = displayHandler
-        self.parser = parser
-        self.width = 160
-        self.height = 43
-        self.img = Image.new('1', (self.width, self.height), 0)
-        self.draw = ImageDraw.Draw(self.img)
-        self.font1 = ImageFont.truetype("consola.ttf", 11)
-        self.font2 = ImageFont.truetype("consola.ttf", 16)
 
     def buttonHandleSpecificAC(self, buttonPressed):
         if buttonPressed == 1:
@@ -24,7 +14,7 @@ class AircraftHandler:
 
     def updateDisplay(self):
         # clear bitmap
-        self.draw.rectangle((0, 0, self.width, self.height), 0, 0)
+        self.g13.draw.rectangle((0, 0, self.g13.width, self.g13.height), 0, 0)
 
     def setData(self, selector, value, update=True):
         setattr(self, selector, value)

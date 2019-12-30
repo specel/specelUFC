@@ -67,11 +67,11 @@ class G13Handler:
 	def activateNewAC(self):
 		self.shouldActivateNewAC=False
 		if self.currentAC=="FA-18C_hornet":
-			self.currentACHook = FA18Handler(self, self.parser)
+			self.currentACHook = FA18Handler(self)
 		elif self.currentAC=="AV8BNA":
 			self.infoDisplay(("AV8BNA", "not implemented yet"))
 		elif self.currentAC=="F-16C_50":
-			self.currentACHook = F16Handler(self, self.parser)
+			self.currentACHook = F16Handler(self)
 
 			
 

@@ -1,25 +1,25 @@
 #!python3
 #test
 
-#import specelG13Handler
 from aircraft import AircraftHandler
-from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
+from dcsbiosParser import StringBuffer
+
 
 class F16Handler(AircraftHandler):
 
-    def __init__(self, displayHandler, parser):
-        super(F16Handler, self).__init__(displayHandler, parser)
+    def __init__(self, displayHandler):
+        super(F16Handler, self).__init__(displayHandler)
         self.DEDLine1=""
         self.DEDLine2=""
         self.DEDLine3=""
         self.DEDLine4=""
         self.DEDLine5=""
         
-        self.bufferDEDLine1= StringBuffer(parser, 0x44fc, 50, lambda s: self.setData("DEDLine1", s))
-        self.bufferDEDLine2= StringBuffer(parser, 0x452e, 50, lambda s: self.setData("DEDLine2", s))
-        self.bufferDEDLine3= StringBuffer(parser, 0x4560, 50, lambda s: self.setData("DEDLine3", s))
-        self.bufferDEDLine4= StringBuffer(parser, 0x4592, 50, lambda s: self.setData("DEDLine4", s))
-        self.bufferDEDLine5= StringBuffer(parser, 0x45c4, 50, lambda s: self.setData("DEDLine5", s))
+        self.bufferDEDLine1= StringBuffer(self.g13.parser, 0x44fc, 50, lambda s: self.setData("DEDLine1", s))
+        self.bufferDEDLine2= StringBuffer(self.g13.parser, 0x452e, 50, lambda s: self.setData("DEDLine2", s))
+        self.bufferDEDLine3= StringBuffer(self.g13.parser, 0x4560, 50, lambda s: self.setData("DEDLine3", s))
+        self.bufferDEDLine4= StringBuffer(self.g13.parser, 0x4592, 50, lambda s: self.setData("DEDLine4", s))
+        self.bufferDEDLine5= StringBuffer(self.g13.parser, 0x45c4, 50, lambda s: self.setData("DEDLine5", s))
 
     def updateDisplay(self):
         super(F16Handler, self).updateDisplay()
@@ -33,19 +33,19 @@ class F16Handler(AircraftHandler):
 
         pos=0
         offsetpos=8
-        self.draw.text((0,pos), self.DEDLine1, 1, self.font1)
+        self.g13.draw.text((0,pos), self.DEDLine1, 1, self.g13.font1)
         pos=pos+offsetpos
-        self.draw.text((0,pos), self.DEDLine2, 1, self.font1)
+        self.g13.draw.text((0,pos), self.DEDLine2, 1, self.g13.font1)
         pos=pos+offsetpos
-        self.draw.text((0,pos), self.DEDLine3, 1, self.font1)
+        self.g13.draw.text((0,pos), self.DEDLine3, 1, self.g13.font1)
         pos=pos+offsetpos
-        self.draw.text((0,pos), self.DEDLine4, 1, self.font1)
+        self.g13.draw.text((0,pos), self.DEDLine4, 1, self.g13.font1)
         pos=pos+offsetpos
-        self.draw.text((0,pos), self.DEDLine5, 1, self.font1)
+        self.g13.draw.text((0,pos), self.DEDLine5, 1, self.g13.font1)
 
         
         #make it array and set proper values
-        pixels = list(self.img.getdata())
+        pixels = list(self.g13.img.getdata())
         for i in range(0,len(pixels)):
         	pixels[i]*=128
 
