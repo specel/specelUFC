@@ -56,7 +56,7 @@ while True:
 		try:
 			c=s.recv(1)
 			parser.processByte(c)
-			if g13.shouldActivateNewAC==True:
+			if g13.shouldActivateNewAC:
 				g13.activateNewAC()
 
 			g13.buttonHandle(s)
