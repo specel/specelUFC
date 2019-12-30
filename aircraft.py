@@ -1,9 +1,7 @@
-from abc import abstractmethod
-
 from PIL import Image, ImageFont, ImageDraw
 
 
-class AircraftHandler(object):
+class AircraftHandler:
     def __init__(self, displayHandler, parser):
         self.g13 = displayHandler
         self.parser = parser
@@ -28,6 +26,7 @@ class AircraftHandler(object):
         # clear bitmap
         self.draw.rectangle((0, 0, self.width, self.height), 0, 0)
 
-    @abstractmethod
     def setData(self, selector, value, update=True):
-        pass
+        setattr(self, selector, value)
+        if update:
+            self.updateDisplay()
