@@ -23,24 +23,7 @@ class F16Handler(AircraftHandler):
 
     def updateDisplay(self):
         super(F16Handler, self).updateDisplay()
-
-        '''print(self.DEDLine1)
-        print(self.DEDLine2)
-        print(self.DEDLine3)
-        print(self.DEDLine4)
-        print(self.DEDLine5)'''
-
-
-        pos=0
-        offsetpos=8
-        self.g13.draw.text((0,pos), self.DEDLine1, 1, self.g13.font1)
-        pos=pos+offsetpos
-        self.g13.draw.text((0,pos), self.DEDLine2, 1, self.g13.font1)
-        pos=pos+offsetpos
-        self.g13.draw.text((0,pos), self.DEDLine3, 1, self.g13.font1)
-        pos=pos+offsetpos
-        self.g13.draw.text((0,pos), self.DEDLine4, 1, self.g13.font1)
-        pos=pos+offsetpos
-        self.g13.draw.text((0,pos), self.DEDLine5, 1, self.g13.font1)
-
+        for i in range(1, 6):
+            offset = (i - 1) * 8
+            self.g13.draw.text((0, offset), getattr(self, f'DEDLine{i}'), 1, self.g13.font1)
         self.g13.updateDisplay(self.g13.img)
