@@ -43,10 +43,4 @@ class F16Handler(AircraftHandler):
         pos=pos+offsetpos
         self.g13.draw.text((0,pos), self.DEDLine5, 1, self.g13.font1)
 
-        
-        #make it array and set proper values
-        pixels = list(self.g13.img.getdata())
-        for i in range(0,len(pixels)):
-        	pixels[i]*=128
-
-        self.g13.updateDisplay(pixels)
+        self.g13.updateDisplay(self.g13.img)

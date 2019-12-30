@@ -75,12 +75,7 @@ class FA18Handler(AircraftHandler):
         #Fuel Totaliser
         self.g13.draw.text((36,29), self.FuelTotal, 1, self.g13.font2)
 
-        #make it array and set proper values
-        pixels = list(self.g13.img.getdata())
-        for i in range(0,len(pixels)):
-        	pixels[i]*=128
-
-        self.g13.updateDisplay(pixels)
+        self.g13.updateDisplay(self.g13.img)
         
     def setData(self, selector, value, update=True):
 		#programming noob here, but it's pretty clear how to use this monster
