@@ -33,6 +33,17 @@ MONO_HEIGHT = 43
 COLOR_WIDTH = 320
 COLOR_HEIGHT = 240
 
+LogiLcdInit = None
+LogiLcdIsConnected = None
+LogiLcdIsButtonPressed = None
+LogiLcdUpdate = None
+LogiLcdShutdown = None
+LogiLcdMonoSetBackground = None
+LogiLcdMonoSetText = None
+LogiLcdColorSetBackground = None
+LogiLcdColorSetTitle = None
+LogiLcdColorSetText = None
+
 #dll_path = 'C:\\Program Files\\Logitech Gaming Software\\LCDSDK\\LCDSDK_8.57.148\\Lib\\GameEnginesWrapper\\x86\\LogitechLcdEnginesWrapper.dll'
 
 #_dll = CDLL(dll_path)

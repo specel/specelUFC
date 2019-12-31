@@ -1,14 +1,15 @@
 #!python3
+from math import log2
 from platform import architecture
 from sys import maxsize
 
 import GLCD_SDK
 from PIL import Image, ImageFont, ImageDraw
-from ctypes import c_ubyte, sizeof, c_voidp
-import socket
+from ctypes import c_ubyte, sizeof, c_void_p
 from specelFA18Handler import FA18Handler
 from specelF16Handler import F16Handler
-from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
+from dcsbiosParser import StringBuffer
+
 
 class G13Handler:
 
@@ -29,7 +30,7 @@ class G13Handler:
 		self.height=43
 
 		#GLCD Init
-		arch = 'x64' if all([architecture()[0] == '64bit', maxsize > 2 ** 32, sizeof(c_voidp) > 4]) else 'x86'
+		arch = 'x64' if all([architecture()[0] == '64bit', maxsize > 2 ** 32, sizeof(c_void_p) > 4]) else 'x86'
 		GLCD_SDK.initDLL("C:\\Program Files\\Logitech Gaming Software\\LCDSDK_8.57.148\\Lib\\GameEnginesWrapper\\{}\\LogitechLcdEnginesWrapper.dll".format(arch))
 		GLCD_SDK.LogiLcdInit("Python",GLCD_SDK.TYPE_MONO)
 
@@ -42,36 +43,23 @@ class G13Handler:
 	def setAC(self, value):
 		if not value == self.currentAC:
 			self.currentAC=value
-			if value=="NONE":
-				print("Unknown AC data: ", value,)
-				self.infoDisplay(("Unknown AC data:",self.currentAC))
-
-			elif value=="FA-18C_hornet":
+			if value in ("FA-18C_hornet", "AV8BNA", "F-16C_50"):
+				print(f'Detected AC: {value}')
 				self.infoDisplay()
-				print("Detected AC: ", value)
-				self.shouldActivateNewAC=True
-
-			elif value=="AV8BNA": 
-				print("Detected AC: ", value)
-				self.shouldActivateNewAC=True
-
-			elif value=="F-16C_50": 
-				print("Detected AC: ", value)
-				self.shouldActivateNewAC=True
-
+				self.shouldActivateNewAC = True
 			else:
 				## FIXME a może tylko tyo zostawić, żeby po prostu zaczynał aktywaować nowy moduł, a weryfikację zostawić w metodzie poniżej?
-				print("Unknown AC data: ", value)
-				self.infoDisplay(("Unknown AC data:",self.currentAC))
+				print(f'Unknown AC data: {value}')
+				self.infoDisplay(('Unknown AC data:', self.currentAC))
 
 	def activateNewAC(self):
 		self.shouldActivateNewAC=False
 		if self.currentAC=="FA-18C_hornet":
-			self.currentACHook = FA18Handler(self, self.parser)
+			self.currentACHook = FA18Handler(self)
 		elif self.currentAC=="AV8BNA":
 			self.infoDisplay(("AV8BNA", "not implemented yet"))
 		elif self.currentAC=="F-16C_50":
-			self.currentACHook = F16Handler(self, self.parser)
+			self.currentACHook = F16Handler(self)
 
 			
 
@@ -89,12 +77,7 @@ class G13Handler:
 				self.draw.text((0,y), line, 1, self.font1)
 				y=y+10
 
-
-		pixels = list(self.img.getdata())
-		for i in range(0,len(pixels)):
-			pixels[i]*=128
-
-		self.updateDisplay(pixels)
+		self.updateDisplay(self.img)
 		'''
 		if GLCD_SDK.LogiLcdIsConnected(GLCD_SDK.TYPE_MONO):
 			GLCD_SDK.LogiLcdMonoSetBackground((c_ubyte * (self.width *self.height))(*pixels))
@@ -103,7 +86,11 @@ class G13Handler:
 			print("LCD is not connected")
 		'''
 
-	def updateDisplay(self, pixels):
+	def updateDisplay(self, img):
+		pixels = list(img.getdata())
+		for i, _ in enumerate(pixels):
+			pixels[i] *= 128
+
 		#put bitmap array into display
 		if GLCD_SDK.LogiLcdIsConnected(GLCD_SDK.TYPE_MONO):
 			GLCD_SDK.LogiLcdMonoSetBackground((c_ubyte * (self.width *self.height))(*pixels))
@@ -120,40 +107,18 @@ class G13Handler:
 		GLCD_SDK.LogiLcdUpdate()
 
 	def checkButtons(self):
-		if GLCD_SDK.LogiLcdIsButtonPressed(GLCD_SDK.MONO_BUTTON_0):
-			if not self.isAlreadyPressed:
-				self.isAlreadyPressed=True
-				return 1
-			else:
+		for btn in (GLCD_SDK.MONO_BUTTON_0, GLCD_SDK.MONO_BUTTON_1, GLCD_SDK.MONO_BUTTON_2, GLCD_SDK.MONO_BUTTON_3):
+			if GLCD_SDK.LogiLcdIsButtonPressed(btn):
+				if not self.isAlreadyPressed:
+					self.isAlreadyPressed = True
+					return int(log2(btn)) + 1
 				return 0
-
-		elif GLCD_SDK.LogiLcdIsButtonPressed(GLCD_SDK.MONO_BUTTON_1):
-			if not self.isAlreadyPressed:
-				self.isAlreadyPressed=True
-				return 2
-			else:
-				return 0
-
-		elif GLCD_SDK.LogiLcdIsButtonPressed(GLCD_SDK.MONO_BUTTON_2):
-			if not self.isAlreadyPressed:
-				self.isAlreadyPressed=True
-				return 3
-			else:
-				return 0
-
-		elif GLCD_SDK.LogiLcdIsButtonPressed(GLCD_SDK.MONO_BUTTON_3):
-			if not self.isAlreadyPressed:
-				self.isAlreadyPressed=True
-				return 4
-			else:
-				return 0
-		else:	
-			self.isAlreadyPressed=False
-			return 0
+		self.isAlreadyPressed = False
+		return 0
 	
 	def buttonHandle(self, socket):
 		button = self.checkButtons()
-		if not button==0:
+		if button:
 			socket.send(bytes(self.currentACHook.buttonHandleSpecificAC(button),"utf-8"))
 
 	
