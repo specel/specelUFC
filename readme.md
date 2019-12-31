@@ -1,4 +1,5 @@
 # specelUFC
+Download newest release from: https://github.com/specel/specelUFC/releases
 This is a software designed to put information from DCS:FA18C Hornet's Up Front Controller (UFC) and F-16C DED display to Logitech G-series keyboards. Developed for **Logitech G13**, but should also work with any other Logitech device with 160x43 px monchrome display, like G15 and G510.
 
 <p align="center">
