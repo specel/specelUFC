@@ -8,7 +8,7 @@ from packaging import version
 from dcsbiosParser import ProtocolParser, StringBuffer, IntegerBuffer
 from specelG13Handler import G13Handler
 
-__version__="v1.12"
+__version__="v1.12.1"
 
 def attemptConnect():
 	connected = False
