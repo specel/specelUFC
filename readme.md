@@ -12,11 +12,11 @@ This is a software designed to put information from DCS:FA18C Hornet's Up Front 
 
 * Installed Logitech LCD SDK_8.57.148 in `C:\Program Files\Logitech Gaming Software\LCDSDK_8.57.148` http://gaming.logitech.com/sdk/LCDSDK_8.57.148.zip
 
-* DCS-BIOS https://github.com/DCSFlightpanels/dcs-bios (version required 0.7.31)copied into `C:\Users\XXX\Saved Games\DCS.openbeta\Scripts`. You also need to add ```dofile(lfs.writedir()..[[Scripts\DCS-BIOS\BIOS.lua]])``` line to your `C:\Users\XXX\Saved Games\DCS.openbeta\Scripts\Export.lua` file
+* DCS-BIOS https://github.com/DCSFlightpanels/dcs-bios (version required 0.7.31 or newer)copied into `C:\Users\XXX\Saved Games\DCS.openbeta\Scripts`. You also need to add ```dofile(lfs.writedir()..[[Scripts\DCS-BIOS\BIOS.lua]])``` line to your `C:\Users\XXX\Saved Games\DCS.openbeta\Scripts\Export.lua` file
 
 ## Credits
 This software uses:
-* https://github.com/DCSFlightpanels/dcs-bios DCS-BIOS fork by DCSFlightpanels for exporting data from DCS to local network (version required 0.7.31)
+* https://github.com/DCSFlightpanels/dcs-bios DCS-BIOS fork by DCSFlightpanels for exporting data from DCS to local network (version required 0.7.31 or newer)
 * Matchstick's script for exportind DED over DCS-BIOS 
 * https://github.com/jboecker/python-dcs-bios-example jboecker's parser to read data stream from DCS-BIOS
 * https://github.com/50thomatoes50/GLCD_SDK.py A Python wrapper for Logitech's LCD SDK
